@@ -1,0 +1,10 @@
+name: grad
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10
+  - numpy>=2.0
+  - scipy
+  - autograd>=1.9
