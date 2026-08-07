@@ -1,6 +1,13 @@
+##
+#
+# Function Base Class
+#
+##
+
 from abc import ABC, abstractmethod
 import autograd.numpy as np
-from autograd import grad, hessian
+from autograd import grad as _grad, hessian as _hessian
+
 
 ###########################################################
 # FUNCTION BASE CLASS
@@ -9,70 +16,67 @@ from autograd import grad, hessian
 class FunctionAD(ABC):
     """Scalar-valued function whose derivatives come from autodiff.
 
-    Implementations only define :meth:`function`.  It must be written with
+    Implementations only define :meth:`evaluate`.  It must be written with
     ``autograd.numpy`` (imported above as ``np``) rather than plain NumPy, and
     must return a scalar; control flow, loops and helper methods are fine.
+    It must *not* call :meth:`_as_float` on its own argument: that is applied
+    once at the boundary below, and calling it again inside ``evaluate``
+    severs the autograd tape.
 
     The derivative functions are built once on first use and reused, so
-    subclasses need no ``__init__``.
+    subclasses need no ``__init__``.  Subclasses live in
+    ``function_examples.py``.
     """
 
-    # Instance-level caches; assigned lazily on first call.
-    _d1 = None
-    _d2 = None
+    # Maps derivative order to the autograd function that builds it.
+    BUILDERS = {1: _grad, 2: _hessian}
+
+    # Instance-level cache; assigned lazily on first call.
+    _derivs = None
 
     @abstractmethod
-    def function(self, x):
+    def evaluate(self, x):
         """Evaluate the cost at ``x`` and return a scalar."""
 
-    def grad_1(self, x):
-        """First derivative at ``x``: the gradient, shaped like ``x``."""
-        if self._d1 is None:
-            self._d1 = grad(self.function)
-        return self._d1(self._as_float(x))
+    def grad(self, x, order):
+        """Derivative of ``order`` at ``x``.
 
-    def grad_2(self, x):
-        """Second derivative at ``x``: the Hessian, shaped ``x.shape * 2``."""
-        if self._d2 is None:
-            self._d2 = hessian(self.function)
-        return self._d2(self._as_float(x))
+        ``order=1`` gives the gradient, shaped like ``x``; ``order=2`` gives
+        the Hessian, shaped ``x.shape * 2``.
+        """
+        if order not in self.BUILDERS:
+            raise ValueError(f"order must be 1 or 2, got {order!r}")
+        if self._derivs is None:
+            # Assigning on the instance keeps the cache per-object; a mutable
+            # class attribute would be shared by every subclass instance.
+            self._derivs = {}
+        if order not in self._derivs:
+            self._derivs[order] = self.BUILDERS[order](self.evaluate)
+        return self._derivs[order](self._as_float(x))
 
     def __call__(self, x):
-        return self.function(self._as_float(x))
+        return self.evaluate(self._as_float(x))
+
+    def evaluate_batch(self, X):
+        """Evaluate at many points.  ``X`` is a stack of inputs along axis 0.
+
+        Returns shape ``(m,)`` for ``m = len(X)``.  Iterating over axis 0 does
+        the right thing for both vector inputs (``X`` of shape ``(m, n)``) and
+        scalar ones (``X`` of shape ``(m,)``), so a ``linspace`` or a cloud of
+        samples can be passed straight in.
+        """
+        return np.array([self(x) for x in X])
+
+    def grad_batch(self, X, order=1):
+        """Derivative of ``order`` at many points.
+
+        Returns shape ``(m,) + x.shape`` for ``order=1`` and
+        ``(m,) + x.shape * 2`` for ``order=2``.
+        """
+        return np.array([self.grad(x, order) for x in X])
 
     @staticmethod
     def _as_float(x):
         # autograd only differentiates floating-point input; an integer array
         # would silently produce zero derivatives instead of raising.
         return np.asarray(x, dtype=float)
-
-
-###########################################################
-# QUADRATIC
-###########################################################
-
-class Quadratic(FunctionAD):
-    """f(x) = 0.5 * x' Q x + c' x, an example subclass with a known Hessian."""
-
-    def __init__(self, Q, c):
-        self.Q = np.asarray(Q, dtype=float)
-        self.c = np.asarray(c, dtype=float)
-
-    def function(self, x):
-        return 0.5 * x @ self.Q @ x + self.c @ x
-
-
-###########################################################
-# TESTING
-###########################################################
-
-if __name__ == "__main__":
-    
-    Q = np.array([[2.0, 0.5], [0.5, 3.0]])
-    c = np.array([1.0, -1.0])
-    f = Quadratic(Q, c)
-    x = np.array([1.0, 2.0])
-
-    print("f(x)      =", f(x))
-    print("grad_1(x) =", f.grad_1(x))       # Q x + c
-    print("grad_2(x) =", f.grad_2(x))       # Q

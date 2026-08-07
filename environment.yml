@@ -8,3 +8,4 @@ dependencies:
   - numpy>=2.0
   - scipy
   - autograd>=1.9
+  - matplotlib
