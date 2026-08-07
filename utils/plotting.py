@@ -1,22 +1,22 @@
-"""Randomized smoothing (Jordana et al., 2025, Sec. II-B3).
+##
+#
+# Plotting Helpers
+#
+##
 
-The method replaces ``f`` with the Gaussian-smoothed surrogate
-``f_mu(x) = E[f(x + mu * eps)]`` for ``eps ~ N(0, Sigma)``, Eq. (5).  Its
-gradient, Eq. (8), is an expectation of evaluations of ``f`` alone, so it can
-be estimated without any derivative of ``f``.
+"""Visualisation for any two-argument :class:`FunctionAD`.
 
-For now this file only draws the unsmoothed landscape and its exact gradient
-field; the surrogate and its sampled gradient estimators go on top of it next.
+Every helper takes the function object itself rather than an array, so the
+same call works for the exact function and for a smoothed surrogate built on
+top of it.  Each accepts an optional ``ax`` so panels can be composed.
 """
 
 import autograd.numpy as np
 import matplotlib.pyplot as plt
 
-from function_examples import *
-
 
 ###########################################################
-# PLOTTING
+# SAMPLING
 ###########################################################
 
 def sample_grid(f, bounds=(-1.0, 1.0), n=200):
@@ -28,6 +28,22 @@ def sample_grid(f, bounds=(-1.0, 1.0), n=200):
     points = np.stack([XX.ravel(), YY.ravel()], axis=1)   # (n * n, 2)
     return XX, YY, f.evaluate_batch(points).reshape(XX.shape)
 
+
+def gradient_grid(f, bounds=(-1.0, 1.0), n=20):
+    """Gradient of ``f`` on an ``n x n`` grid spanning ``bounds`` in both
+    arguments.  Returns ``(XX, YY, U, V)``, each of shape ``(n, n)``, where
+    ``(U, V)`` are the two components of the gradient.
+    """
+    axis = np.linspace(bounds[0], bounds[1], n)
+    XX, YY = np.meshgrid(axis, axis)
+    points = np.stack([XX.ravel(), YY.ravel()], axis=1)   # (n * n, 2)
+    G = f.grad_batch(points, 1)                           # (n * n, 2)
+    return XX, YY, G[:, 0].reshape(XX.shape), G[:, 1].reshape(XX.shape)
+
+
+###########################################################
+# PLOTTING
+###########################################################
 
 def plot_landscape(f, bounds=(-1.0, 1.0), n=200, ax=None):
     """Filled contour of ``f`` over ``bounds`` in both arguments."""
@@ -43,18 +59,6 @@ def plot_landscape(f, bounds=(-1.0, 1.0), n=200, ax=None):
     ax.set_ylabel("y")
     ax.set_aspect("equal")
     return ax
-
-
-def gradient_grid(f, bounds=(-1.0, 1.0), n=20):
-    """Gradient of ``f`` on an ``n x n`` grid spanning ``bounds`` in both
-    arguments.  Returns ``(XX, YY, U, V)``, each of shape ``(n, n)``, where
-    ``(U, V)`` are the two components of the gradient.
-    """
-    axis = np.linspace(bounds[0], bounds[1], n)
-    XX, YY = np.meshgrid(axis, axis)
-    points = np.stack([XX.ravel(), YY.ravel()], axis=1)   # (n * n, 2)
-    G = f.grad_batch(points, 1)                           # (n * n, 2)
-    return XX, YY, G[:, 0].reshape(XX.shape), G[:, 1].reshape(XX.shape)
 
 
 def plot_gradient_field(f, bounds=(-1.0, 1.0), n=20, ax=None, normalize=False,
@@ -113,34 +117,3 @@ def plot_surface(f, bounds=(-1.0, 1.0), n=80, ax=None, cmap="viridis",
     ax.set_ylabel("y")
     ax.set_zlabel("f(x, y)")
     return ax
-
-
-###########################################################
-# TESTING
-###########################################################
-
-if __name__ == "__main__":
-
-    # f = Quadratic()
-    f = Sin()
-    # f = SinExp()
-    # f = Nasty()
-
-    bounds = (-1.0, 1.0)
-
-    _, axes = plt.subplots(1, 2, figsize=(11.0, 4.5))
-
-    plot_landscape(f, bounds, ax=axes[0])
-    plot_gradient_field(f, bounds, n=20, ax=axes[0])
-    axes[0].set_title("gradient, true magnitude")
-
-    plot_landscape(f, bounds, ax=axes[1])
-    plot_gradient_field(f, bounds, n=20, ax=axes[1], normalize=True)
-    axes[1].set_title("gradient, direction only")
-
-    plt.tight_layout()
-
-    # The same landscape as a 3-D surface.
-    ax = plot_surface(f, bounds)
-
-    plt.show()

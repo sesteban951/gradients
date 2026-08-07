@@ -4,8 +4,19 @@
 #
 ##
 
+# directory imports
+import sys
+import os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.getenv("GRAD_ROOT_DIR") or os.path.dirname(HERE)
+sys.path.append(ROOT)
+
+# standard imports
 import autograd.numpy as np
-from function import FunctionAD
+
+# custom imports
+from src.function import FunctionAD
 
 
 ###########################################################
