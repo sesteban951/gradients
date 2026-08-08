@@ -13,6 +13,7 @@ top of it.  Each accepts an optional ``ax`` so panels can be composed.
 
 import autograd.numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
 
 
 ###########################################################
@@ -39,6 +40,44 @@ def gradient_grid(f, bounds=(-1.0, 1.0), n=20):
     points = np.stack([XX.ravel(), YY.ravel()], axis=1)   # (n * n, 2)
     G = f.grad_batch(points, 1)                           # (n * n, 2)
     return XX, YY, G[:, 0].reshape(XX.shape), G[:, 1].reshape(XX.shape)
+
+
+def error_grid(f, estimator, bounds=(-1.0, 1.0), n=25, repeats=1,
+               reference=None):
+    """Squared gradient error of ``estimator`` on an ``n x n`` grid.
+
+    Returns ``(XX, YY, E)``, each of shape ``(n, n)``, where ``E`` holds
+    ``|| g_hat - g_true ||^2`` averaged over ``repeats`` independent estimates
+    at that point.
+
+    ``estimator`` is anything exposing ``estimate_batch(f, X)`` -- the classes
+    in ``methods/rand_smoothing.py``, in practice.  Keeping this duck-typed
+    means the plotting layer never imports the methods layer.
+
+    A single repeat is one draw of a random quantity, so the field comes out
+    speckled and neighbouring points are not comparable.  Averaging a handful
+    of repeats turns it into an estimate of the mean squared error, which is
+    what actually varies smoothly across the domain.
+
+    ``reference`` supplies the ground truth as a callable mapping the
+    ``(n * n, 2)`` stack of points to a matching stack of gradients.  The
+    default is the autodiff gradient of ``f``.  That is the right reference
+    only where ``f`` is differentiable and only for estimators targeting
+    ``grad f``; the smoothing family targets ``grad f_mu``, so at large ``mu``
+    part of what shows up here is that gap rather than sampling error.
+    """
+    axis = np.linspace(bounds[0], bounds[1], n)
+    XX, YY = np.meshgrid(axis, axis)
+    points = np.stack([XX.ravel(), YY.ravel()], axis=1)   # (n * n, 2)
+
+    truth = f.grad_batch(points, 1) if reference is None else reference(points)
+
+    total = np.zeros(len(points))
+    for _ in range(repeats):
+        G = estimator.estimate_batch(f, points)           # (n * n, 2)
+        total = total + np.sum((G - truth) ** 2, axis=1)
+
+    return XX, YY, (total / repeats).reshape(XX.shape)
 
 
 ###########################################################
@@ -85,6 +124,82 @@ def plot_gradient_field(f, bounds=(-1.0, 1.0), n=20, ax=None, normalize=False,
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     return ax
+
+
+def plot_error_heatmaps(f, estimators, bounds=(-1.0, 1.0), n=25, repeats=1,
+                        reference=None, ncols=4, cmap="magma",
+                        max_decades=8, show_landscape=True):
+    """One squared-error heatmap per estimator, on a shared colour scale.
+
+    ``estimators`` maps a display name to an estimator object.  Every panel is
+    drawn with the same :class:`~matplotlib.colors.LogNorm`, which is what
+    makes them comparable: errors here routinely span several orders of
+    magnitude, and a linear scale would collapse all but the worst panel into
+    a single flat colour.
+
+    ``max_decades`` bounds how far below the largest error the scale reaches.
+    Deterministic finite differences can be accurate to machine precision, and
+    without a floor those panels would stretch the scale over fifteen decades
+    and leave no resolution for the rest.  Panels that bottom out are drawn in
+    the under-colour, which is the honest reading: exact to within the range
+    the figure can show.
+
+    Returns ``(fig, fields)`` with ``fields`` the ``(n, n)`` error array for
+    each estimator, so the numbers can be inspected as well as looked at.
+    """
+    names = list(estimators)
+    grids = [error_grid(f, estimators[k], bounds, n, repeats, reference)
+             for k in names]
+    XX, YY = grids[0][0], grids[0][1]
+    fields = {k: g[2] for k, g in zip(names, grids)}
+
+    # A shared scale across every panel, floored so that a near-exact panel
+    # cannot stretch it out of usefulness.
+    stacked = np.array(list(fields.values()))
+    positive = stacked[stacked > 0.0]
+    if positive.size == 0:
+        raise ValueError("every estimator was exact everywhere; nothing to plot")
+    vmax = float(stacked.max())
+    vmin = max(float(positive.min()), vmax * 10.0 ** (-max_decades))
+    norm = LogNorm(vmin=vmin, vmax=vmax)
+
+    total = len(names) + (1 if show_landscape else 0)
+    nrows = int(np.ceil(total / ncols))
+    fig, axes = plt.subplots(nrows, ncols, figsize=(3.2 * ncols, 3.4 * nrows),
+                             squeeze=False, layout="constrained")
+    flat = axes.ravel()
+
+    for ax, name in zip(flat, names):
+        mesh = ax.pcolormesh(XX, YY, np.clip(fields[name], vmin, vmax),
+                             norm=norm, cmap=cmap, shading="auto")
+        # The median is a better summary than the mean here: these fields are
+        # heavy-tailed, and a handful of bad points would carry the mean.
+        ax.set_title(f"{name.strip()}\nmedian {np.median(fields[name]):.1e}",
+                     fontsize=9)
+        ax.set_aspect("equal")
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    # Attached to every panel so constrained_layout reserves its own column
+    # rather than taking the space out of the last heatmap.
+    fig.colorbar(mesh, ax=flat.tolist(), extend="min", shrink=0.85,
+                 label=r"$\|\hat{g} - \nabla f\|^2$")
+
+    if show_landscape:
+        # The last panel shows f itself, so the error structure can be read
+        # against the shape that produced it.
+        ax = flat[len(names)]
+        LX, LY, Z = sample_grid(f, bounds, 200)
+        ax.contourf(LX, LY, Z, levels=40, cmap="viridis")
+        ax.set_title("the function", fontsize=9)
+        ax.set_aspect("equal")
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    for ax in flat[total:]:
+        ax.axis("off")
+
+    return fig, fields
 
 
 def plot_surface(f, bounds=(-1.0, 1.0), n=80, ax=None, cmap="viridis",
