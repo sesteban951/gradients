@@ -1,0 +1,120 @@
+Warp 1.13.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 4090" (23 GiB, sm_89, mempool enabled)
+   Kernel cache:
+     /home/sergio/.cache/warp/1.13.0
+model: unitree_go1  nv=18 nu=12 nx=36  nworld=97  S=20
+gold reference: CPU float64 central differences at h=1e-06
+
+[flight]  ncon=0  |A_gold|_F=15.54
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+Module mujoco_warp._src.smooth 976a5d7 load on device 'cuda:0' took 6.26 ms  (cached)
+Module mujoco_warp._src.collision_driver fbb0ee0 load on device 'cuda:0' took 0.27 ms  (cached)
+Module _nxn_broadphase__locals__kernel_d86cb85d d86cb85 load on device 'cuda:0' took 0.27 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_07fe83f0 07fe83f load on device 'cuda:0' took 0.98 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_5e8edf22 5e8edf2 load on device 'cuda:0' took 0.78 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_4d2b9152 4d2b915 load on device 'cuda:0' took 0.90 ms  (cached)
+Module mujoco_warp._src.constraint eb0e24d load on device 'cuda:0' took 1.38 ms  (cached)
+Module _efc_contact_init__locals__kernel_732198c4 732198c load on device 'cuda:0' took 0.27 ms  (cached)
+Module _efc_contact_jac_dense__locals__kernel_1ef8a44f dca6f30 load on device 'cuda:0' took 0.30 ms  (cached)
+Module _efc_contact_update__locals__kernel_b43fbfe7 b43fbfe load on device 'cuda:0' took 0.30 ms  (cached)
+Module mujoco_warp._src.forward a76b6a3 load on device 'cuda:0' took 0.90 ms  (cached)
+Module mujoco_warp._src.passive 616927b load on device 'cuda:0' took 0.72 ms  (cached)
+Module mujoco_warp._src.forward 398750d load on device 'cuda:0' took 1.02 ms  (cached)
+Module mujoco_warp._src.support f32a4f8 load on device 'cuda:0' took 0.25 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_4bedd9a5 f8f9563 load on device 'cuda:0' took 55.77 ms  (cached)
+Module mujoco_warp._src.solver 7df28c9 load on device 'cuda:0' took 0.95 ms  (cached)
+Module solve_init_jaref__locals__kernel_0662e971 0662e97 load on device 'cuda:0' took 0.41 ms  (cached)
+Module mul_m_dense__locals___mul_m_dense_23838ec7 23838ec load on device 'cuda:0' took 0.29 ms  (cached)
+Module update_constraint_efc__locals__kernel_6bfb2757 6bfb275 load on device 'cuda:0' took 0.25 ms  (cached)
+Module update_constraint_gauss_cost__locals__kernel_2227eb01 2227eb0 load on device 'cuda:0' took 0.25 ms  (cached)
+Module update_gradient_JTDAJ_dense_tiled__locals__kernel_e132fb0d 3d21abb load on device 'cuda:0' took 0.49 ms  (cached)
+Module update_gradient_cholesky__locals__kernel_cb677982 374a340 load on device 'cuda:0' took 62.14 ms  (cached)
+Module linesearch_iterative__locals__kernel_f2ca8108 37bc815 load on device 'cuda:0' took 0.53 ms  (cached)
+Module mujoco_warp._src.sensor bee2d80 load on device 'cuda:0' took 1.44 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_fe26c12a 080725f load on device 'cuda:0' took 65.11 ms  (cached)
+     1e-02   2.57e-05   2.13e+00   2.13e+00   2.23e+00  1.20e-08   0.9597  36/36   2.13e+00       nan
+     3e-03   1.49e-04   5.76e-01   5.76e-01   6.03e-01  1.18e-07   0.9803  36/36   5.76e-01       nan
+     1e-03   2.07e-04   2.07e-04   1.10e-08   1.80e-04  4.65e-07   0.9998  36/36   2.07e-04       nan
+     3e-04   5.40e-04   5.40e-04   1.29e-09   4.59e-04  2.30e-06   0.9991  36/36   5.40e-04       nan
+     1e-04   2.45e-03   2.45e-03   8.50e-10   2.24e-03  3.02e-10   0.9876  36/36   2.45e-03       nan
+     3e-05   7.66e-03   7.66e-03   8.39e-10   2.49e-03  5.46e-11  -0.1734  36/36   7.66e-03       nan
+     1e-05   1.47e-02   1.47e-02   8.51e-10   1.34e-02  8.28e-11  -0.1954  36/36   1.47e-02       nan
+     3e-06   1.52e-01   1.52e-01   8.10e-10   1.54e-01  1.25e-10  -0.1772  36/36   1.52e-01       nan
+     1e-06   1.96e-01   1.96e-01   5.99e-12   1.53e-01  2.06e-10  -0.1608  36/36   1.96e-01       nan
+
+[stance]  ncon=4  |A_gold|_F=69.45
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+     1e-02   1.10e-04   1.94e+00   1.94e+00   4.31e-01  6.54e-05   0.4998  35/36   8.41e-01  2.24e+00
+     3e-03   2.26e-04   2.46e+00   2.46e+00   6.55e-03  1.03e-04   0.8406  36/36   2.46e+00       nan
+     1e-03   9.98e-04   1.28e+00   1.28e+00   9.07e-03  6.29e-04   0.9311  36/36   1.28e+00       nan
+     3e-04   1.00e-02   5.14e-02   5.05e-02   1.21e-02  3.71e-03   0.4093  36/36   5.14e-02       nan
+     1e-04   1.88e-02   1.88e-02   7.18e-05   2.87e-02  8.70e-03   0.2512  36/36   1.88e-02       nan
+     3e-05   4.71e-02   4.71e-02   6.46e-06   7.42e-02  2.84e-02  -0.3696  36/36   4.71e-02       nan
+     1e-05   8.29e-02   8.29e-02   7.11e-07   2.06e-01  7.23e-02  -0.2883  36/36   8.29e-02       nan
+     3e-06   2.06e-01   2.06e-01   5.75e-08   6.68e-01  2.09e-01  -0.3927  36/36   2.06e-01       nan
+     1e-06   4.50e-01   4.50e-01   9.69e-11   1.53e+00  5.64e-01  -0.4183  36/36   4.50e-01       nan
+
+[loaded]  ncon=8  |A_gold|_F=103.9
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+     1e-02   2.46e-04   4.65e-01   4.65e-01   1.25e-01  2.58e-04   0.7568  26/36   1.27e-01  4.76e-01
+     3e-03   7.39e-04   6.11e-02   6.11e-02   4.04e-02  8.45e-04   0.9806  29/36   4.07e-02  6.52e-02
+     1e-03   2.33e-03   2.43e-02   2.47e-02   2.88e-02  2.53e-03   0.9804  33/36   3.21e-02  1.94e-02
+     3e-04   4.80e-03   9.95e-03   8.58e-03   1.33e-02  7.58e-03   0.4728  35/36   1.23e-02  6.75e-03
+     1e-04   1.81e-02   1.83e-02   2.47e-03   1.96e-02  2.30e-02  -0.3373  36/36   1.83e-02       nan
+     3e-05   5.83e-02   5.83e-02   2.03e-04   6.56e-02  7.33e-02  -0.4277  36/36   5.83e-02       nan
+     1e-05   1.66e-01   1.66e-01   2.60e-04   1.85e-01  2.51e-01  -0.2035  36/36   1.66e-01       nan
+     3e-06   4.94e-01   4.94e-01   7.86e-06   3.45e-01  7.31e-01  -0.9524  36/36   4.94e-01       nan
+     1e-06   1.72e+00   1.72e+00   7.68e-06   2.03e+00  1.15e+00  -0.7674  36/36   1.72e+00       nan
+
+[onset]  ncon=1  |A_gold|_F=98.34
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+     1e-02   9.38e-04   2.33e-01   2.33e-01   1.81e-01  1.23e-03   0.9212  22/36   3.89e-02  2.36e-01
+     3e-03   3.04e-03   1.79e-01   1.79e-01   6.05e-02  4.89e-03   0.9312  25/36   5.66e-02  1.83e-01
+     1e-03   8.27e-03   2.27e-01   2.27e-01   2.11e-02  1.26e-02   0.6486  28/36   3.11e-02  2.34e-01
+     3e-04   2.87e-02   3.92e-01   3.91e-01   1.37e-02  3.83e-02  -0.6153  29/36   9.04e-02  4.06e-01
+     1e-04   7.21e-02   7.50e-01   7.45e-01   1.38e-01  1.02e-01  -0.6847  32/36   2.47e-01  7.80e-01
+     3e-05   1.70e-01   1.45e+00   1.43e+00   3.37e-01  2.62e-01  -0.6981  35/36   4.03e-01  1.86e+00
+     1e-05   6.87e-01   6.87e-01   4.03e-05   9.01e-01  9.09e-01  -0.6940  36/36   6.87e-01       nan
+     3e-06   2.75e+00   2.75e+00   9.76e-06   3.44e+00  1.33e+00  -0.6811  36/36   2.75e+00       nan
+     1e-06   9.36e+00   9.36e+00   0.00e+00   1.05e+01  1.36e+00  -0.7150  36/36   9.36e+00       nan
+
+[release]  ncon=0  |A_gold|_F=50.19
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+     1e-02   6.50e-05   3.69e-01   3.69e-01   2.82e-01  2.10e-06   0.0814  23/36   1.93e+00  2.71e-01
+     3e-03   2.32e-04   1.10e-01   1.10e-01   1.73e-02  5.36e-07   0.1850  26/36   2.28e-02  1.44e-01
+     1e-03   5.95e-04   1.09e-01   1.09e-01   2.04e-03  7.00e-07   0.2646  29/36   2.65e-03  1.77e-01
+     3e-04   1.78e-03   2.57e-01   2.56e-01   1.39e-03  2.79e-06   0.1449  30/36   1.76e-03  5.23e-01
+     1e-04   4.26e-03   3.99e-01   3.99e-01   3.40e-03  1.07e-05   0.0486  35/36   4.48e-03  2.00e+01
+     3e-05   9.77e-03   9.85e-01   9.82e-01   1.00e-02  1.98e-05   0.0194  35/36   1.31e-02  4.94e+01
+     1e-05   3.58e-02   3.58e-02   1.11e-09   2.73e-02  1.11e-04  -0.0005  36/36   3.58e-02       nan
+     3e-06   1.01e-01   1.01e-01   1.21e-09   8.31e-02  4.26e-04  -0.0056  36/36   1.01e-01       nan
+     1e-06   2.90e-01   2.90e-01   0.00e+00   2.16e-01  8.09e-04  -0.6711  36/36   2.90e-01       nan
+
+[sliding]  ncon=4  |A_gold|_F=377.9
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+     1e-02   1.01e-04   3.97e-01   3.97e-01   1.42e-01  1.30e-04   0.9507  35/36   1.16e-01  4.11e-01
+     3e-03   2.63e-04   1.00e-01   1.00e-01   1.24e-01  3.00e-04   0.9328  36/36   1.00e-01       nan
+     1e-03   5.54e-04   4.57e-02   4.56e-02   1.08e-01  8.27e-04   0.9237  36/36   4.57e-02       nan
+     3e-04   2.58e-03   1.22e-02   1.20e-02   5.81e-02  3.25e-03  -0.0389  36/36   1.22e-02       nan
+     1e-04   6.38e-03   7.52e-03   4.57e-03   3.92e-02  9.23e-03  -0.0260  36/36   7.52e-03       nan
+     3e-05   1.89e-02   1.92e-02   3.76e-03   7.52e-02  3.00e-02  -0.5573  36/36   1.92e-02       nan
+     1e-05   5.88e-02   5.90e-02   3.34e-03   2.03e-01  8.77e-02  -0.5870  36/36   5.90e-02       nan
+     3e-06   1.80e-01   1.80e-01   2.06e-03   5.19e-01  2.61e-01  -0.2981  36/36   1.80e-01       nan
+     1e-06   5.90e-01   5.90e-01   1.12e-07   2.66e+00  7.44e-01  -0.5795  36/36   5.90e-01       nan
+
+[impact]  ncon=4  |A_gold|_F=329.3
+         h  E_same(A)  E_gold(A)   E_cpu(A)  E_gold(B)     noise  cos_min    stab    E_stab     E_chg
+     1e-02   1.96e-04   6.26e-02   6.26e-02   1.16e-01  2.63e-04   0.8432  25/36   2.53e-02  6.28e-02
+     3e-03   7.58e-04   5.13e-02   5.13e-02   6.93e-02  9.28e-04   0.9310  31/36   4.00e-02  5.15e-02
+     1e-03   2.19e-03   1.95e-02   1.93e-02   1.86e-02  2.90e-03   0.3189  35/36   2.96e-02  1.90e-02
+     3e-04   6.86e-03   8.39e-03   5.09e-03   3.71e-02  1.02e-02  -0.1488  35/36   3.66e-02  4.96e-03
+     1e-04   2.30e-02   2.30e-02   1.40e-04   1.03e-01  2.93e-02  -0.6140  36/36   2.30e-02       nan
+     3e-05   7.69e-02   7.69e-02   1.49e-04   3.48e-01  1.10e-01  -0.3918  36/36   7.69e-02       nan
+     1e-05   2.27e-01   2.27e-01   1.39e-04   1.05e+00  3.05e-01  -0.5232  36/36   2.27e-01       nan
+     3e-06   6.86e-01   6.87e-01   2.11e-04   4.01e+00  8.42e-01  -0.4406  36/36   6.87e-01       nan
+     1e-06   2.17e+00   2.17e+00   0.00e+00   1.14e+01  1.29e+00  -0.5945  36/36   2.17e+00       nan
+
+wrote /home/sergio/projects/gradients/mujoco_grad/results/phase34_sweep_S20.json

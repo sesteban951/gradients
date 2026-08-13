@@ -1,0 +1,243 @@
+{
+  "versions": {
+    "mujoco": "3.8.1",
+    "numpy": "2.4.6",
+    "warp": "1.13.0",
+    "mujoco_warp": "3.8.1",
+    "gpu": "NVIDIA GeForce RTX 4090, 580.173.02, 8.9",
+    "cpu_count": 32
+  },
+  "rows": [
+    {
+      "fixture": "flight",
+      "S": 1,
+      "dq": 1.1134103977514861e-07,
+      "dv": 1.2398293718536608e-07,
+      "rel_dq": 0.002837437303138637,
+      "rel_dv": 6.319211885084917e-06,
+      "ncon_cpu": 0,
+      "ncon_warp": 0,
+      "pairs_match": true
+    },
+    {
+      "fixture": "flight",
+      "S": 5,
+      "dq": 1.0782604972341108e-07,
+      "dv": 4.370327617601922e-07,
+      "rel_dq": 0.00018319070629191678,
+      "rel_dv": 4.4549720872598585e-06,
+      "ncon_cpu": 0,
+      "ncon_warp": 0,
+      "pairs_match": true
+    },
+    {
+      "fixture": "flight",
+      "S": 20,
+      "dq": 1.2743798314567545e-07,
+      "dv": 7.120324148441133e-07,
+      "rel_dq": 1.5465023924284817e-05,
+      "rel_dv": 1.8145576321205732e-06,
+      "ncon_cpu": 0,
+      "ncon_warp": 0,
+      "pairs_match": true
+    },
+    {
+      "fixture": "stance",
+      "S": 1,
+      "dq": 9.53448917779254e-08,
+      "dv": 3.7746324992766156e-07,
+      "rel_dq": 661.0718484900428,
+      "rel_dv": 5.234266918093135,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "stance",
+      "S": 5,
+      "dq": 9.535272103106994e-08,
+      "dv": 1.354243856996523e-06,
+      "rel_dq": 55.55026532882362,
+      "rel_dv": 5.338355322548095,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "stance",
+      "S": 20,
+      "dq": 1.0204005241572095e-07,
+      "dv": 1.7846929473953266e-06,
+      "rel_dq": 8.159899757869466,
+      "rel_dv": 4.538521093881487,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "loaded",
+      "S": 1,
+      "dq": 2.3498018249703817e-07,
+      "dv": 0.00010220602977862063,
+      "rel_dq": 8.768039617553846e-05,
+      "rel_dv": 7.627422097717713e-05,
+      "ncon_cpu": 8,
+      "ncon_warp": 8,
+      "pairs_match": true
+    },
+    {
+      "fixture": "loaded",
+      "S": 5,
+      "dq": 2.6492895167907233e-07,
+      "dv": 5.290363374029185e-05,
+      "rel_dq": 9.05245383392145e-06,
+      "rel_dv": 1.3042127287793615e-05,
+      "ncon_cpu": 8,
+      "ncon_warp": 8,
+      "pairs_match": true
+    },
+    {
+      "fixture": "loaded",
+      "S": 20,
+      "dq": 6.4056143603366606e-06,
+      "dv": 0.00010109054211582458,
+      "rel_dq": 6.589285000020289e-05,
+      "rel_dv": 7.17397742995515e-05,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "onset",
+      "S": 1,
+      "dq": 9.898347374389464e-08,
+      "dv": 1.4281868121230093e-06,
+      "rel_dq": 6.454686987335389e-05,
+      "rel_dv": 2.028613671210372e-06,
+      "ncon_cpu": 2,
+      "ncon_warp": 2,
+      "pairs_match": true
+    },
+    {
+      "fixture": "onset",
+      "S": 5,
+      "dq": 1.8558174111740156e-07,
+      "dv": 5.340717125951169e-06,
+      "rel_dq": 3.437606963920785e-05,
+      "rel_dv": 5.974992548557821e-06,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "onset",
+      "S": 20,
+      "dq": 3.1612090155909446e-07,
+      "dv": 5.304007217911278e-06,
+      "rel_dq": 6.930677345699891e-06,
+      "rel_dv": 4.769579884439643e-06,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "release",
+      "S": 1,
+      "dq": 1.4634527917579394e-07,
+      "dv": 1.911230695858797e-06,
+      "rel_dq": 6.102653068524758e-05,
+      "rel_dv": 1.8273694835351124e-06,
+      "ncon_cpu": 0,
+      "ncon_warp": 0,
+      "pairs_match": true
+    },
+    {
+      "fixture": "release",
+      "S": 5,
+      "dq": 1.608768005658622e-07,
+      "dv": 4.123619470963797e-06,
+      "rel_dq": 6.7751443729070725e-06,
+      "rel_dv": 1.2742198433035026e-06,
+      "ncon_cpu": 0,
+      "ncon_warp": 0,
+      "pairs_match": true
+    },
+    {
+      "fixture": "release",
+      "S": 20,
+      "dq": 2.1074266360795596e-07,
+      "dv": 6.511678786775426e-06,
+      "rel_dq": 1.9939810762212156e-06,
+      "rel_dv": 4.296920878375959e-06,
+      "ncon_cpu": 0,
+      "ncon_warp": 0,
+      "pairs_match": true
+    },
+    {
+      "fixture": "sliding",
+      "S": 1,
+      "dq": 1.4543933600060368e-07,
+      "dv": 2.3007351244830843e-06,
+      "rel_dq": 4.5836184175426754e-05,
+      "rel_dv": 2.191622769969358e-06,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "sliding",
+      "S": 5,
+      "dq": 2.5976411010916833e-07,
+      "dv": 4.861867326524818e-06,
+      "rel_dq": 9.87361354768872e-06,
+      "rel_dv": 1.4461665126326378e-06,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "sliding",
+      "S": 20,
+      "dq": 2.188108753678341e-07,
+      "dv": 9.266341123924285e-06,
+      "rel_dq": 1.601556086697519e-06,
+      "rel_dv": 2.9189137486213736e-06,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "impact",
+      "S": 1,
+      "dq": 1.260510242499574e-07,
+      "dv": 6.292326715527674e-06,
+      "rel_dq": 1.1263450898957878e-05,
+      "rel_dv": 1.3196525467285121e-06,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "impact",
+      "S": 5,
+      "dq": 1.5033729976619586e-07,
+      "dv": 7.282128114376767e-06,
+      "rel_dq": 1.234071824842102e-06,
+      "rel_dv": 4.108456435067295e-07,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    },
+    {
+      "fixture": "impact",
+      "S": 20,
+      "dq": 3.109208698824645e-05,
+      "dv": 0.000539339302668638,
+      "rel_dq": 4.831760620254505e-05,
+      "rel_dv": 5.053479497684941e-05,
+      "ncon_cpu": 4,
+      "ncon_warp": 4,
+      "pairs_match": true
+    }
+  ]
+}

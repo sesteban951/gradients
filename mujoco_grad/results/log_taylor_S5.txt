@@ -1,0 +1,117 @@
+Warp 1.13.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 4090" (23 GiB, sm_89, mempool enabled)
+   Kernel cache:
+     /home/sergio/.cache/warp/1.13.0
+Module mujoco_warp._src.smooth 976a5d7 load on device 'cuda:0' took 6.49 ms  (cached)
+Module mujoco_warp._src.collision_driver fbb0ee0 load on device 'cuda:0' took 0.24 ms  (cached)
+Module _nxn_broadphase__locals__kernel_d86cb85d d86cb85 load on device 'cuda:0' took 0.34 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_07fe83f0 07fe83f load on device 'cuda:0' took 1.00 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_5e8edf22 5e8edf2 load on device 'cuda:0' took 0.77 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_4d2b9152 4d2b915 load on device 'cuda:0' took 0.88 ms  (cached)
+Module mujoco_warp._src.constraint eb0e24d load on device 'cuda:0' took 1.25 ms  (cached)
+Module _efc_contact_init__locals__kernel_732198c4 732198c load on device 'cuda:0' took 0.28 ms  (cached)
+Module _efc_contact_jac_dense__locals__kernel_1ef8a44f dca6f30 load on device 'cuda:0' took 0.28 ms  (cached)
+Module _efc_contact_update__locals__kernel_b43fbfe7 b43fbfe load on device 'cuda:0' took 0.29 ms  (cached)
+Module mujoco_warp._src.forward a76b6a3 load on device 'cuda:0' took 0.76 ms  (cached)
+Module mujoco_warp._src.passive 616927b load on device 'cuda:0' took 0.57 ms  (cached)
+Module mujoco_warp._src.forward 398750d load on device 'cuda:0' took 0.77 ms  (cached)
+Module mujoco_warp._src.support f32a4f8 load on device 'cuda:0' took 0.29 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_4bedd9a5 f8f9563 load on device 'cuda:0' took 55.67 ms  (cached)
+Module mujoco_warp._src.solver 7df28c9 load on device 'cuda:0' took 0.95 ms  (cached)
+Module solve_init_jaref__locals__kernel_0662e971 0662e97 load on device 'cuda:0' took 0.24 ms  (cached)
+Module mul_m_dense__locals___mul_m_dense_23838ec7 23838ec load on device 'cuda:0' took 0.37 ms  (cached)
+Module update_constraint_efc__locals__kernel_6bfb2757 6bfb275 load on device 'cuda:0' took 0.27 ms  (cached)
+Module update_constraint_gauss_cost__locals__kernel_2227eb01 2227eb0 load on device 'cuda:0' took 0.26 ms  (cached)
+Module update_gradient_JTDAJ_dense_tiled__locals__kernel_e132fb0d 3d21abb load on device 'cuda:0' took 0.46 ms  (cached)
+Module update_gradient_cholesky__locals__kernel_cb677982 374a340 load on device 'cuda:0' took 62.23 ms  (cached)
+Module linesearch_iterative__locals__kernel_f2ca8108 37bc815 load on device 'cuda:0' took 0.59 ms  (cached)
+Module mujoco_warp._src.sensor bee2d80 load on device 'cuda:0' took 1.46 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_fe26c12a 080725f load on device 'cuda:0' took 64.64 ms  (cached)
+Module update_gradient_JTDAJ_dense_tiled__locals__kernel_4d04a481 9813915 load on device 'cuda:0' took 0.58 ms  (cached)
+[flight]  h_warp=1e-03  ncon=0
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   5.246e+00   5.246e+00   5.246e+00
+     1e-01   1.630e+00   1.630e+00   1.630e+00
+     3e-02   3.869e-01   3.869e-01   3.869e-01
+     1e-02   5.391e-02   5.391e-02   5.391e-02
+     3e-03   1.328e-07   1.162e-06   3.153e-07
+     1e-03   1.475e-08   8.270e-07   9.690e-08
+     3e-04   1.328e-09   9.460e-07   2.895e-08
+     1e-04   1.475e-10   6.888e-07   9.662e-09
+  log-log slope:  cpu_cpu=3.52  warp_warp=2.41  warp_cpu=2.98
+
+[stance]  h_warp=1e-04  ncon=4
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   5.782e+00   5.783e+00   5.783e+00
+     1e-01   2.880e+00   2.880e+00   2.880e+00
+     3e-02   1.470e+00   1.470e+00   1.470e+00
+     1e-02   4.525e-01   4.524e-01   4.525e-01
+     3e-03   7.910e-02   7.908e-02   7.908e-02
+     1e-03   2.552e-03   2.566e-03   2.560e-03
+     3e-04   2.110e-05   2.512e-05   2.323e-05
+     1e-04   2.344e-06   6.143e-06   3.281e-06
+  log-log slope:  cpu_cpu=1.90  warp_warp=1.82  warp_cpu=1.87
+
+[loaded]  h_warp=3e-04  ncon=8
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   2.082e+00   2.081e+00   2.081e+00
+     1e-01   2.158e-01   2.165e-01   2.166e-01
+     3e-02   9.749e-02   9.773e-02   9.773e-02
+     1e-02   2.315e-02   2.323e-02   2.322e-02
+     3e-03   2.280e-04   2.774e-04   2.622e-04
+     1e-03   1.371e-05   6.466e-05   3.677e-05
+     3e-04   5.262e-07   1.448e-05   1.021e-05
+     1e-04   5.698e-08   1.890e-05   3.402e-06
+  log-log slope:  cpu_cpu=2.26  warp_warp=1.61  warp_cpu=1.77
+
+[onset]  h_warp=1e-05  ncon=1
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   6.830e+00   7.016e+00   7.016e+00
+     1e-01   3.169e+00   3.236e+00   3.236e+00
+     3e-02   4.420e-01   4.551e-01   4.551e-01
+     1e-02   6.722e-02   7.995e-02   8.000e-02
+     3e-03   1.530e-02   1.899e-02   1.899e-02
+     1e-03   1.011e-02   1.072e-02   1.072e-02
+     3e-04   9.595e-03   9.626e-03   9.633e-03
+     1e-04   7.398e-06   3.680e-04   3.673e-04
+  log-log slope:  cpu_cpu=1.43  warp_warp=1.15  warp_cpu=1.15
+
+[release]  h_warp=1e-05  ncon=0
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   4.510e+00   4.523e+00   4.523e+00
+     1e-01   1.389e+00   1.391e+00   1.391e+00
+     3e-02   2.178e-01   2.182e-01   2.182e-01
+     1e-02   2.106e-02   2.140e-02   2.140e-02
+     3e-03   3.574e-03   4.030e-03   4.032e-03
+     1e-03   3.323e-03   3.468e-03   3.471e-03
+     3e-04   2.389e-03   2.441e-03   2.443e-03
+     1e-04   2.384e-03   2.396e-03   2.398e-03
+  log-log slope:  cpu_cpu=1.03  warp_warp=1.02  warp_cpu=1.02
+
+[sliding]  h_warp=1e-04  ncon=4
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   1.847e+01   1.856e+01   1.856e+01
+     1e-01   4.647e+00   4.688e+00   4.688e+00
+     3e-02   5.546e-01   5.692e-01   5.692e-01
+     1e-02   9.944e-02   9.976e-02   9.977e-02
+     3e-03   9.911e-03   1.053e-02   1.055e-02
+     1e-03   1.201e-03   1.417e-03   1.447e-03
+     3e-04   1.338e-04   1.921e-04   2.177e-04
+     1e-04   2.656e-05   6.491e-05   5.609e-05
+  log-log slope:  cpu_cpu=1.73  warp_warp=1.65  warp_cpu=1.65
+
+[impact]  h_warp=3e-04  ncon=4
+     alpha     cpu_cpu   warp_warp    warp_cpu
+     3e-01   2.003e+01   2.001e+01   2.001e+01
+     1e-01   4.275e+00   4.293e+00   4.293e+00
+     3e-02   3.744e-01   3.793e-01   3.793e-01
+     1e-02   4.271e-02   4.432e-02   4.427e-02
+     3e-03   4.146e-03   4.594e-03   4.634e-03
+     1e-03   4.356e-04   7.710e-04   6.721e-04
+     3e-04   3.929e-05   3.776e-04   1.187e-04
+     1e-04   4.364e-06   3.058e-04   2.975e-05
+  log-log slope:  cpu_cpu=1.95  warp_warp=1.50  warp_cpu=1.74
+

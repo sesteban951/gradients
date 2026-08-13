@@ -1,0 +1,56 @@
+{
+  "versions": {
+    "mujoco": "3.8.1",
+    "numpy": "2.4.6",
+    "warp": "1.13.0",
+    "mujoco_warp": "3.8.1",
+    "gpu": "NVIDIA GeForce RTX 4090, 580.173.02, 8.9",
+    "cpu_count": 32
+  },
+  "dims": {
+    "nq": 19,
+    "nv": 18,
+    "na": 0,
+    "nu": 12,
+    "nx": 36,
+    "nworld": 96
+  },
+  "nworld": 97,
+  "h": 0.0001,
+  "nthread": 32,
+  "rows": [
+    {
+      "S": 1,
+      "mjd": 0.0008032842333705048,
+      "cpu_serial": 0.0020941251431005575,
+      "cpu_threaded": 0.001149453233362389,
+      "warp_eager": 0.025384098428600867,
+      "warp": 0.001260584400006337,
+      "warp_gpu_only": 0.00037345336665263554,
+      "speedup_vs_mjd": 0.6372316152464418,
+      "speedup_vs_threaded": 0.9118415501227928
+    },
+    {
+      "S": 5,
+      "mjd": NaN,
+      "cpu_serial": 0.007813487142941864,
+      "cpu_threaded": 0.0014144124333445992,
+      "warp_eager": 0.11539948299988671,
+      "warp": 0.0024938263666626883,
+      "warp_gpu_only": 0.0016045285666526374,
+      "speedup_vs_mjd": NaN,
+      "speedup_vs_threaded": 0.5671655622269355
+    },
+    {
+      "S": 20,
+      "mjd": NaN,
+      "cpu_serial": 0.028951152142846177,
+      "cpu_threaded": 0.002950169399991864,
+      "warp_eager": 0.45813038799990735,
+      "warp": 0.00840365253334312,
+      "warp_gpu_only": 0.007511476266639268,
+      "speedup_vs_mjd": NaN,
+      "speedup_vs_threaded": 0.3510579939242484
+    }
+  ]
+}
