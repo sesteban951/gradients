@@ -61,6 +61,13 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.getenv("GRAD_ROOT_DIR") or os.path.dirname(HERE)
+
+# A stale override -- the tree moved but the variable did not -- would shadow
+# the right path silently, so check it points at this package before trusting
+# it and otherwise locate the package from __file__, which cannot go stale.
+if not os.path.isdir(os.path.join(ROOT, "src")):
+    ROOT = os.path.dirname(HERE)
+
 sys.path.append(ROOT)
 
 # standard imports
@@ -614,39 +621,40 @@ if __name__ == "__main__":
     ###########################################################
 
     # f_mu itself, rather than its gradient: the convolution that all three
-    # smoothing estimators are differentiating without ever forming.  Raising
-    # mu widens the Gaussian, which rounds the kinks, tilts the plateaus and
-    # smears the two jumps into ramps -- and, as the colourbars show, pulls
-    # the range in as the extremes get averaged away.
-    MU_LADDER = (0.05, 0.15, 0.35)
+    # smoothing estimators are differentiating without ever forming.  The
+    # panels run from the widest smoothing down to none, so each step sharpens
+    # the surrogate back towards f -- the kinks re-form, the plateaus flatten
+    # out again and the two jumps steepen -- closing on the original as the
+    # mu = 0 limit.  The colour ranges widen along the way, as progressively
+    # less of the extremes is averaged off.
+    #
+    # Both figures are built from one list, so the surface panels correspond
+    # one-to-one with the contour panels, and from the same SmoothedFunction
+    # objects, so the two show the same draw of the noise rather than two
+    # independent estimates of the same surrogate.
+    MU_LADDER = (0.35, 0.15, 0.05)          # progressively lower
     K_SMOOTH = 400
 
     print(f"\nsmoothed surrogate f_mu at mu = {MU_LADDER}, K = {K_SMOOTH} ...")
 
-    _, axes = plt.subplots(1, 1 + len(MU_LADDER),
-                           figsize=(4.6 * (1 + len(MU_LADDER)), 4.0))
+    panels = [(SmoothedFunction(f, mu=mu, num_samples=K_SMOOTH),
+               rf"$f_\mu$,  $\mu$ = {mu}") for mu in MU_LADDER]
+    panels.append((f, rf"{name_f}: original,  $\mu$ = 0"))
 
-    plot_landscape(f, bounds, ax=axes[0])
-    axes[0].set_title(f"{name_f}: original")
-
-    for ax, mu in zip(axes[1:], MU_LADDER):
-        plot_landscape(SmoothedFunction(f, mu=mu, num_samples=K_SMOOTH),
-                       bounds, ax=ax)
-        ax.set_title(rf"$f_\mu$,  $\mu$ = {mu}")
+    # As filled contours.
+    _, axes = plt.subplots(1, len(panels), figsize=(4.6 * len(panels), 4.0))
+    for ax, (g, title) in zip(axes, panels):
+        plot_landscape(g, bounds, ax=ax)
+        ax.set_title(title, fontsize=10)
 
     plt.tight_layout()
 
-    # The original and the widest surrogate as surfaces, side by side.
-    fig = plt.figure(figsize=(11.0, 4.8))
-
-    ax = fig.add_subplot(1, 2, 1, projection="3d")
-    plot_surface(f, bounds, ax=ax)
-    ax.set_title(f"{name_f}: original")
-
-    ax = fig.add_subplot(1, 2, 2, projection="3d")
-    plot_surface(SmoothedFunction(f, mu=MU_LADDER[-1], num_samples=K_SMOOTH),
-                 bounds, ax=ax)
-    ax.set_title(rf"$f_\mu$,  $\mu$ = {MU_LADDER[-1]}")
+    # The same ladder again as surfaces, panel for panel.
+    fig = plt.figure(figsize=(4.8 * len(panels), 4.6))
+    for i, (g, title) in enumerate(panels):
+        ax = fig.add_subplot(1, len(panels), i + 1, projection="3d")
+        plot_surface(g, bounds, ax=ax)
+        ax.set_title(title, fontsize=10)
 
     plt.tight_layout()
 

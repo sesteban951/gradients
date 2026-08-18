@@ -71,6 +71,13 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.getenv("GRAD_ROOT_DIR") or os.path.dirname(HERE)
+
+# A stale override -- the tree moved but the variable did not -- would shadow
+# the right path silently, so check it points at this package before trusting
+# it and otherwise locate the package from __file__, which cannot go stale.
+if not os.path.isdir(os.path.join(ROOT, "src")):
+    ROOT = os.path.dirname(HERE)
+
 sys.path.append(ROOT)
 
 # standard imports
